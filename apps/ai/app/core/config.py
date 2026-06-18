@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     ai_host: str = "0.0.0.0"
     ai_port: int = 8001
     ai_backend_internal_token: str = "dev-internal-token"
+    test_mode: bool = False
 
     vector_db: str = "memory"
     qdrant_url: str = "http://localhost:6333"
@@ -22,8 +23,9 @@ class Settings(BaseSettings):
     llm_temperature: float = 0.0
     llm_mock_enabled: bool = True
 
-    # Cloud embeddings — used only when vector_db requires them
+    # Cloud embeddings — used when vector_db=chroma or qdrant
     embedding_provider: str = "openai"
+    embedding_api_key: str = ""
     embedding_model: str = "text-embedding-3-small"
     embedding_dimensions: int = 1536
 
