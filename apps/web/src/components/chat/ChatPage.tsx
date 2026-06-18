@@ -102,7 +102,7 @@ export function ChatPage({ token, teamsContext, onConversationChange }: ChatPage
         <div className="eng-welcome">
           <h1 className="eng-welcome__title">How can we help you today?</h1>
           <p className="eng-welcome__subtitle">
-            Ask HR questions in Albanian, Italian, or Serbian ÔÇö answers are grounded in your
+            Ask HR questions in Albanian, Italian, or Serbian — answers are grounded in your
             authorized HR documents.
           </p>
         </div>

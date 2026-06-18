@@ -28,7 +28,7 @@ export function ChatComposer({ disabled, onSubmit }: ChatComposerProps) {
       <textarea
         ref={textareaRef}
         className="eng-composer__textarea"
-        placeholder="Message HR HubÔÇª"
+        placeholder="Message HR Hub…"
         rows={1}
         disabled={disabled}
         onKeyDown={handleKeyDown}

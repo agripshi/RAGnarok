@@ -53,24 +53,17 @@ interface ConversationThreadProps {
 
 export function ConversationThread({ messages, token }: ConversationThreadProps) {
   return (
-    <div style={{ width: '100%', maxWidth: 'var(--rag-max-content)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+    <div className="eng-thread">
       {messages.map((msg) => (
         <div
           key={msg.id}
-          style={{
-            alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start',
-            maxWidth: '85%',
-            padding: '1rem',
-            borderRadius: 'var(--rag-radius-md)',
-            background: msg.role === 'user' ? '#e8f3ff' : 'var(--rag-surface)',
-            border: '1px solid var(--rag-border)',
-          }}
+          className={`eng-message eng-message--${msg.role}`}
         >
           {msg.isLoading ? (
-            <Text>Thinking…</Text>
+            <Text style={{ color: 'var(--eng-text)' }}>Thinking…</Text>
           ) : (
             <>
-              <Text>{msg.content}</Text>
+              <Text style={{ color: 'var(--eng-text)' }}>{msg.content}</Text>
               {msg.status && (
                 <div style={{ marginTop: '0.5rem' }}>
                   <StatusBadge status={msg.status} />

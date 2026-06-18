@@ -1,6 +1,6 @@
 import { createDarkTheme, type BrandVariants, type Theme } from '@fluentui/react-components';
 
-/** Engineering brand purple ramp ÔÇö anchored at #A100FF */
+/** Engineering brand purple ramp — anchored at #A100FF */
 const engineeringBrand: BrandVariants = {
   10: '#14001f',
   20: '#240033',

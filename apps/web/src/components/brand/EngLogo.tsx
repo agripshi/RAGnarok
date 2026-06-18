@@ -18,9 +18,7 @@ export function EngLogo({ showHub = true }: EngLogoProps) {
       <span className="eng-logo__hub">eng</span>
       {showHub && (
         <>
-          <span className="eng-logo__sep" aria-hidden>
-            ┬À
-          </span>
+          <span className="eng-logo__sep" aria-hidden>·</span>
           <span className="eng-logo__hub">hr hub</span>
         </>
       )}

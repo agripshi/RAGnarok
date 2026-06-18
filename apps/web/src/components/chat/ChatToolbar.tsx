@@ -80,7 +80,7 @@ export function ChatToolbar({ token, refreshKey = 0 }: ChatToolbarProps) {
   };
 
   const historyPlaceholder = loadingHistory
-    ? 'Loading historyÔÇª'
+    ? 'Loading history…'
     : conversations.length === 0
       ? 'No past chats yet'
       : 'Chat history';

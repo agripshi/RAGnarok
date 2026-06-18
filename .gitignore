@@ -39,3 +39,5 @@ apps/web/.vite/
 
 # Local SQLite DB
 *.db
+*.zip
+*.Zone.Identifier

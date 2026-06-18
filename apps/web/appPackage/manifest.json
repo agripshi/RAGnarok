@@ -26,15 +26,16 @@
     {
       "entityId": "hr-hub-tab",
       "name": "HR Hub",
-      "contentUrl": "http://127.0.0.1:5173",
-      "websiteUrl": "http://127.0.0.1:5173",
-      "scopes": ["personal", "team"]
+      "contentUrl": "https://dbivtz-ip-109-236-40-246.tunnelmole.net",
+      "websiteUrl": "https://dbivtz-ip-109-236-40-246.tunnelmole.net",
+      "scopes": [
+        "personal",
+        "team"
+      ]
     }
   ],
   "validDomains": [
-    "localhost:5173",
-    "127.0.0.1:5173",
-    "127.0.0.1:8000"
+    "dbivtz-ip-109-236-40-246.tunnelmole.net"
   ],
   "webApplicationInfo": {
     "id": "00000000-0000-0000-0000-000000000002",
