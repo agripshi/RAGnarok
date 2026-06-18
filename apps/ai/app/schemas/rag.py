@@ -2,6 +2,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from app.core.locations import LocationCode
+
 AnswerStatus = Literal["ANSWERED", "NEEDS_CLARIFICATION", "NOT_FOUND", "ACCESS_DENIED", "ERROR"]
 
 
@@ -21,6 +23,7 @@ class RagAnswerRequest(BaseModel):
     user_id: str
     conversation_id: str
     question: str = Field(min_length=1, max_length=5000)
+    location: LocationCode
     recent_messages: list[RecentMessage] = []
     authorization_scope: AuthorizationScope
     response_language_hint: str | None = None
@@ -34,6 +37,7 @@ class SourceDto(BaseModel):
     sourceUrl: str | None = None
     modifiedAt: str | None = None
     confidence: float | None = None
+    location: str | None = None
 
 
 class RagAnswerResponse(BaseModel):

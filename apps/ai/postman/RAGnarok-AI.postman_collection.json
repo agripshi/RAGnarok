@@ -1,0 +1,263 @@
+{
+  "info": {
+    "_postman_id": "ragnarok-ai-backend-collection",
+    "name": "RAGnarok AI Backend",
+    "description": "AI backend APIs for document ingestion and RAG Q&A.\n\nSet collection variables:\n- baseUrl (default http://127.0.0.1:8001)\n- internalToken (matches AI_BACKEND_INTERNAL_TOKEN)\n- teamId / channelId (must match ingest scope)\n- location (al or sr — branch filter for RAG)\n\nTest routes (/ai/test/*) require TEST_MODE=true in apps/ai/.env and need no bearer token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8001"
+    },
+    {
+      "key": "internalToken",
+      "value": "dev-internal-token"
+    },
+    {
+      "key": "teamId",
+      "value": "demo-team-id"
+    },
+    {
+      "key": "channelId",
+      "value": "demo-hr-channel-id"
+    },
+    {
+      "key": "location",
+      "value": "al"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/ai/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "health"]
+            },
+            "description": "No authentication required. Check vectorDb, testMode, llmMode."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authenticated (Production)",
+      "item": [
+        {
+          "name": "Ingest Sync",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{internalToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source_mode\": \"local\",\n  \"source_path\": null,\n  \"team_id\": \"{{teamId}}\",\n  \"channel_id\": \"{{channelId}}\",\n  \"force_reindex\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/ingest/sync",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "ingest", "sync"]
+            },
+            "description": "Load docs from HR_DOCS_LOCAL_DIR/al/ and /sr/, split/chunk/embed, store in vector DB. Requires bearer token."
+          },
+          "response": []
+        },
+        {
+          "name": "RAG Answer (Albanian - location al)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{internalToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"postman-sq-1\",\n  \"user_id\": \"test-user\",\n  \"conversation_id\": \"test-conv\",\n  \"question\": \"Si mund të kërkoj pushime?\",\n  \"location\": \"al\",\n  \"recent_messages\": [],\n  \"authorization_scope\": {\n    \"team_id\": \"{{teamId}}\",\n    \"channel_id\": \"{{channelId}}\",\n    \"allowed\": true\n  },\n  \"response_language_hint\": \"sq\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/rag/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "rag", "answer"]
+            },
+            "description": "Query indexed HR documents. Requires bearer token."
+          },
+          "response": []
+        },
+        {
+          "name": "RAG Answer (Serbian - location sr)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{internalToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"postman-sr-1\",\n  \"user_id\": \"test-user\",\n  \"conversation_id\": \"test-conv\",\n  \"question\": \"Kako mogu da zatražim godišnji odmor?\",\n  \"location\": \"sr\",\n  \"recent_messages\": [],\n  \"authorization_scope\": {\n    \"team_id\": \"{{teamId}}\",\n    \"channel_id\": \"{{channelId}}\",\n    \"allowed\": true\n  },\n  \"response_language_hint\": \"sr\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/rag/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "rag", "answer"]
+            },
+            "description": "Query indexed HR documents. Requires bearer token."
+          },
+          "response": []
+        },
+        {
+          "name": "RAG Answer (Access Denied)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{internalToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"postman-denied-1\",\n  \"user_id\": \"test-user\",\n  \"conversation_id\": \"test-conv\",\n  \"question\": \"Test question\",\n  \"location\": \"{{location}}\",\n  \"recent_messages\": [],\n  \"authorization_scope\": {\n    \"team_id\": \"{{teamId}}\",\n    \"channel_id\": \"{{channelId}}\",\n    \"allowed\": false\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/rag/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "rag", "answer"]
+            },
+            "description": "Expect status ACCESS_DENIED."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Test Mode (No Auth)",
+      "description": "Available only when TEST_MODE=true in apps/ai/.env. Restart server after changing.",
+      "item": [
+        {
+          "name": "Ingest Sync (Test)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"source_mode\": \"local\",\n  \"source_path\": null,\n  \"team_id\": \"{{teamId}}\",\n  \"channel_id\": \"{{channelId}}\",\n  \"force_reindex\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/test/ingest/sync",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "test", "ingest", "sync"]
+            },
+            "description": "Same as /ai/ingest/sync but no bearer token. Requires TEST_MODE=true."
+          },
+          "response": []
+        },
+        {
+          "name": "RAG Answer (Test - Albanian location al)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"postman-test-al-1\",\n  \"user_id\": \"test-user\",\n  \"conversation_id\": \"test-conv\",\n  \"question\": \"Si mund të kërkoj pushime?\",\n  \"location\": \"al\",\n  \"recent_messages\": [],\n  \"authorization_scope\": {\n    \"team_id\": \"{{teamId}}\",\n    \"channel_id\": \"{{channelId}}\",\n    \"allowed\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/test/rag/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "test", "rag", "answer"]
+            },
+            "description": "Same as /ai/rag/answer but no bearer token. Requires TEST_MODE=true."
+          },
+          "response": []
+        },
+        {
+          "name": "RAG Answer (Test - Serbian location sr)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"request_id\": \"postman-test-sr-1\",\n  \"user_id\": \"test-user\",\n  \"conversation_id\": \"test-conv\",\n  \"question\": \"Kako mogu da zatražim godišnji odmor?\",\n  \"location\": \"sr\",\n  \"recent_messages\": [],\n  \"authorization_scope\": {\n    \"team_id\": \"{{teamId}}\",\n    \"channel_id\": \"{{channelId}}\",\n    \"allowed\": true\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/test/rag/answer",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "test", "rag", "answer"]
+            },
+            "description": "Same as /ai/rag/answer but no bearer token. Requires TEST_MODE=true."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

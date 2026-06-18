@@ -26,8 +26,8 @@
     {
       "entityId": "hr-hub-tab",
       "name": "HR Hub",
-      "contentUrl": "https://wo59uw-ip-109-236-40-246.tunnelmole.net",
-      "websiteUrl": "https://wo59uw-ip-109-236-40-246.tunnelmole.net",
+      "contentUrl": "https://vhc4x7-ip-109-236-40-246.tunnelmole.net",
+      "websiteUrl": "https://vhc4x7-ip-109-236-40-246.tunnelmole.net",
       "scopes": [
         "personal",
         "team"
@@ -35,7 +35,7 @@
     }
   ],
   "validDomains": [
-    "wo59uw-ip-109-236-40-246.tunnelmole.net"
+    "vhc4x7-ip-109-236-40-246.tunnelmole.net"
   ],
   "webApplicationInfo": {
     "id": "00000000-0000-0000-0000-000000000002",
