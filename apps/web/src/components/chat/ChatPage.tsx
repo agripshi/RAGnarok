@@ -9,9 +9,10 @@ import { ConversationThread } from './ConversationThread';
 interface ChatPageProps {
   token: string;
   teamsContext: TeamsContextPayload;
+  onConversationChange?: () => void;
 }
 
-export function ChatPage({ token, teamsContext }: ChatPageProps) {
+export function ChatPage({ token, teamsContext, onConversationChange }: ChatPageProps) {
   const {
     conversationId,
     messages,
@@ -59,6 +60,7 @@ export function ChatPage({ token, teamsContext }: ChatPageProps) {
           sources: response.sources,
           backendMessageId: response.messageId,
         });
+        onConversationChange?.();
       } catch (e) {
         if (e instanceof ApiError && e.status === 403) {
           setAccessDenied(true);
@@ -78,28 +80,32 @@ export function ChatPage({ token, teamsContext }: ChatPageProps) {
         setSending(false);
       }
     },
-    [token, teamsContext, conversationId, addMessage, updateMessage, setConversationId, setSending, setAccessDenied, setGlobalError]
+    [
+      token,
+      teamsContext,
+      conversationId,
+      addMessage,
+      updateMessage,
+      setConversationId,
+      setSending,
+      setAccessDenied,
+      setGlobalError,
+      onConversationChange,
+    ]
   );
 
   const hasMessages = messages.length > 0;
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        padding: '2rem 1rem',
-        gap: '1.5rem',
-        justifyContent: hasMessages ? 'flex-start' : 'center',
-        minHeight: '70vh',
-      }}
-    >
+    <div className={`eng-chat-page${hasMessages ? '' : ' eng-chat-page--centered'}`}>
       {!hasMessages && (
-        <h1 style={{ fontWeight: 600, fontSize: '2rem', margin: 0, textAlign: 'center' }}>
-          Welcome, how can I help?
-        </h1>
+        <div className="eng-welcome">
+          <h1 className="eng-welcome__title">How can we help you today?</h1>
+          <p className="eng-welcome__subtitle">
+            Ask HR questions in English, Serbian, or Albanian — answers are grounded in your
+            authorized HR documents.
+          </p>
+        </div>
       )}
       {hasMessages && <ConversationThread messages={messages} token={token} />}
       <ChatComposer disabled={isSending} onSubmit={handleSubmit} />

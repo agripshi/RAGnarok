@@ -1,8 +1,9 @@
 from app.core.config import settings
+from app.core.locations import location_to_language
 from app.llm.chat_model import generate_hr_answer
-from app.llm.language import CLARIFICATION, NOT_FOUND, detect_language
+from app.llm.language import NOT_FOUND, detect_language
+from app.retrieval.hr_retriever import retrieve_chunks
 from app.schemas.rag import RagAnswerRequest, RagAnswerResponse, SourceDto
-from app.vectorstore.chroma_store import get_vector_store
 
 
 class RagService:
@@ -16,12 +17,15 @@ class RagService:
                 sources=[],
             )
 
-        language = detect_language(request.question, request.response_language_hint)
-        store = get_vector_store()
-        chunks = store.search(
+        language = detect_language(
+            request.question,
+            request.response_language_hint or location_to_language(request.location),
+        )
+        chunks = retrieve_chunks(
             request.question,
             scope.team_id,
             scope.channel_id,
+            request.location,
             settings.top_k,
         )
         filtered = [c for c in chunks if c.score >= settings.similarity_threshold]
@@ -40,16 +44,6 @@ class RagService:
                 sources=[],
             )
 
-        offices = {c.office for c in filtered if c.office and c.office != "unknown"}
-        if len(offices) > 1 and not _mentions_office(request.question):
-            return RagAnswerResponse(
-                status="NEEDS_CLARIFICATION",
-                language=language,
-                answer=CLARIFICATION.get(language, CLARIFICATION["en"]),
-                clarification_question=CLARIFICATION.get(language, CLARIFICATION["en"]),
-                sources=[],
-            )
-
         context_chunks = filtered[: settings.max_context_chunks]
         sources = [
             SourceDto(
@@ -60,6 +54,7 @@ class RagService:
                 sourceUrl=c.source_url,
                 modifiedAt=c.modified_at,
                 confidence=round(c.score, 2),
+                location=c.location,
             )
             for c in context_chunks
         ]
@@ -88,8 +83,3 @@ class RagService:
             answer=answer,
             sources=sources,
         )
-
-
-def _mentions_office(question: str) -> bool:
-    q = question.lower()
-    return any(k in q for k in ("albania", "shqip", "serbia", "srbija", "italy", "italia"))

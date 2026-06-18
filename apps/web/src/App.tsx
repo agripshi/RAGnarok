@@ -1,8 +1,9 @@
-import { FluentProvider, webLightTheme, Spinner, Text } from '@fluentui/react-components';
+import { FluentProvider, webDarkTheme, Spinner, Text } from '@fluentui/react-components';
 import { useEffect, useState } from 'react';
 import { fetchMe } from './api/meApi';
 import { useTeamsAuth } from './auth/useTeamsAuth';
 import { ChatPage } from './components/chat/ChatPage';
+import { ChatToolbar } from './components/chat/ChatToolbar';
 import { env } from './config/env';
 import './styles/globals.css';
 
@@ -40,6 +41,7 @@ function App() {
   const auth = useTeamsAuth();
   const [hasHrAccess, setHasHrAccess] = useState<boolean | null>(null);
   const [accessError, setAccessError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (!auth.token) return;
@@ -54,7 +56,7 @@ function App() {
 
   if (auth.isInitializing || (auth.token && hasHrAccess === null && !accessError)) {
     return (
-      <FluentProvider theme={webLightTheme}>
+      <FluentProvider theme={webDarkTheme}>
         <LoadingState label={`Starting ${env.appDisplayName}…`} />
       </FluentProvider>
     );
@@ -62,7 +64,7 @@ function App() {
 
   if (auth.error || !auth.token) {
     return (
-      <FluentProvider theme={webLightTheme}>
+      <FluentProvider theme={webDarkTheme}>
         <ErrorState
           title="Authentication failed"
           message={auth.error ?? 'No token available'}
@@ -73,7 +75,7 @@ function App() {
 
   if (accessError) {
     return (
-      <FluentProvider theme={webLightTheme}>
+      <FluentProvider theme={webDarkTheme}>
         <ErrorState
           title="Cannot reach backend"
           message={`${accessError} — ensure the API is running at ${env.apiBaseUrl}`}
@@ -84,19 +86,25 @@ function App() {
 
   if (hasHrAccess === false) {
     return (
-      <FluentProvider theme={webLightTheme}>
+      <FluentProvider theme={webDarkTheme}>
         <AccessDeniedView />
       </FluentProvider>
     );
   }
 
   return (
-    <FluentProvider theme={webLightTheme}>
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <header style={{ padding: '1rem 1.5rem', borderBottom: '1px solid var(--rag-border)', background: 'var(--rag-surface)' }}>
-          <Text weight="semibold">{env.appDisplayName}</Text>
+    <FluentProvider theme={webDarkTheme}>
+      <div className="eng-app">
+        <header className="eng-app__header">
+          <ChatToolbar token={auth.token!} refreshKey={refreshKey} />
         </header>
-        <ChatPage token={auth.token} teamsContext={auth.teamsContext} />
+        <main className="eng-app__main">
+          <ChatPage
+            token={auth.token!}
+            teamsContext={auth.teamsContext}
+            onConversationChange={() => setRefreshKey((k) => k + 1)}
+          />
+        </main>
       </div>
     </FluentProvider>
   );

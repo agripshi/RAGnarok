@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     ai_host: str = "0.0.0.0"
     ai_port: int = 8001
     ai_backend_internal_token: str = "dev-internal-token"
+    test_mode: bool = False
 
     vector_db: str = "memory"
     qdrant_url: str = "http://localhost:6333"
@@ -22,8 +23,9 @@ class Settings(BaseSettings):
     llm_temperature: float = 0.0
     llm_mock_enabled: bool = True
 
-    # Cloud embeddings — used only when vector_db requires them
+    # Cloud embeddings — used when vector_db=chroma or qdrant
     embedding_provider: str = "openai"
+    embedding_api_key: str = ""
     embedding_model: str = "text-embedding-3-small"
     embedding_dimensions: int = 1536
 
@@ -33,8 +35,8 @@ class Settings(BaseSettings):
     chunk_overlap: int = 120
     max_context_chunks: int = 6
 
-    default_team_id: str = "demo-team-id"
-    default_channel_id: str = "demo-hr-channel-id"
+    default_team_id: str = "1531e68a-4716-43aa-bc3b-41b11451cbbb"
+    default_channel_id: str = "19:11b56c75623d48ac828e2797373cacae@thread.tacv2"
     hr_docs_local_dir: str = "../../data/hr-docs"
 
 

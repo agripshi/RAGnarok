@@ -4,37 +4,38 @@
   "version": "1.0.0",
   "id": "00000000-0000-0000-0000-000000000001",
   "developer": {
-    "name": "RAGnarok Team",
+    "name": "HR Hub Team",
     "websiteUrl": "https://github.com",
     "privacyUrl": "https://github.com",
     "termsOfUseUrl": "https://github.com"
   },
   "name": {
-    "short": "RAGnarok HR",
-    "full": "RAGnarok HR Assistant"
+    "short": "HR Hub",
+    "full": "HR Hub"
   },
   "description": {
     "short": "Multilingual HR assistant grounded in private HR documents.",
-    "full": "Ask HR questions in Albanian, Italian, or Serbian and receive answers grounded only in authorized HR documents from your private Teams channel."
+    "full": "Ask HR questions in English, Serbian, or Albanian and receive answers grounded only in authorized HR documents from your private Teams channel."
   },
   "icons": {
     "color": "color.png",
     "outline": "outline.png"
   },
-  "accentColor": "#002F53",
+  "accentColor": "#A100FF",
   "staticTabs": [
     {
-      "entityId": "ragnarok-hr-tab",
-      "name": "HR Assistant",
-      "contentUrl": "http://127.0.0.1:5173",
-      "websiteUrl": "http://127.0.0.1:5173",
-      "scopes": ["personal", "team"]
+      "entityId": "hr-hub-tab",
+      "name": "HR Hub",
+      "contentUrl": "https://vhc4x7-ip-109-236-40-246.tunnelmole.net",
+      "websiteUrl": "https://vhc4x7-ip-109-236-40-246.tunnelmole.net",
+      "scopes": [
+        "personal",
+        "team"
+      ]
     }
   ],
   "validDomains": [
-    "localhost:5173",
-    "127.0.0.1:5173",
-    "127.0.0.1:8000"
+    "vhc4x7-ip-109-236-40-246.tunnelmole.net"
   ],
   "webApplicationInfo": {
     "id": "00000000-0000-0000-0000-000000000002",
