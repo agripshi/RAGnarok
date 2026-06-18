@@ -1,6 +1,6 @@
 # RAGnarok HR Assistant
 
-Multilingual HR chatbot for Microsoft Teams — grounded answers from private HR documents (Albanian, Italian, Serbian).
+Multilingual HR chatbot for Microsoft Teams — grounded answers from private HR documents (English, Serbian, Albanian).
 
 ## Architecture
 

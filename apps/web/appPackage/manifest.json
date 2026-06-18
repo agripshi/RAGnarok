@@ -15,7 +15,7 @@
   },
   "description": {
     "short": "Multilingual HR assistant grounded in private HR documents.",
-    "full": "Ask HR questions in Albanian, Italian, or Serbian and receive answers grounded only in authorized HR documents from your private Teams channel."
+    "full": "Ask HR questions in English, Serbian, or Albanian and receive answers grounded only in authorized HR documents from your private Teams channel."
   },
   "icons": {
     "color": "color.png",
@@ -26,8 +26,8 @@
     {
       "entityId": "hr-hub-tab",
       "name": "HR Hub",
-      "contentUrl": "https://dbivtz-ip-109-236-40-246.tunnelmole.net",
-      "websiteUrl": "https://dbivtz-ip-109-236-40-246.tunnelmole.net",
+      "contentUrl": "https://wo59uw-ip-109-236-40-246.tunnelmole.net",
+      "websiteUrl": "https://wo59uw-ip-109-236-40-246.tunnelmole.net",
       "scopes": [
         "personal",
         "team"
@@ -35,7 +35,7 @@
     }
   ],
   "validDomains": [
-    "dbivtz-ip-109-236-40-246.tunnelmole.net"
+    "wo59uw-ip-109-236-40-246.tunnelmole.net"
   ],
   "webApplicationInfo": {
     "id": "00000000-0000-0000-0000-000000000002",

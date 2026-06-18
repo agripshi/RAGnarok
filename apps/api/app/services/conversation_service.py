@@ -60,7 +60,7 @@ def get_conversation(db: Session, user: AuthenticatedUser, conversation_id: str)
                 role=m.role,  # type: ignore[arg-type]
                 content=m.content,
                 status=m.status,  # type: ignore[arg-type]
-                language=m.language if m.language in ("sq", "it", "sr", "en") else None,
+                language=m.language if m.language in ("sq", "sr", "en") else None,
                 sources=[_source_dto(s) for s in m.answer_sources] if m.role == "assistant" else [],
                 createdAt=_iso(m.created_at),
             )
