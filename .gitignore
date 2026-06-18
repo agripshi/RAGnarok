@@ -35,6 +35,7 @@ htmlcov/
 
 # Vite
 apps/web/dist/
+apps/web/.vite/
 
 # Local SQLite DB
 *.db
