@@ -9,4 +9,5 @@ export interface ChatMessageVm {
   sources?: SourceCardDto[];
   createdAt: string;
   isLoading?: boolean;
+  backendMessageId?: string;
 }

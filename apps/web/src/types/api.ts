@@ -47,3 +47,9 @@ export interface MeResponse {
   displayName?: string | null;
   hasHrAccess: boolean;
 }
+
+export interface FeedbackRequest {
+  messageId: string;
+  rating: 'helpful' | 'not_helpful';
+  comment?: string;
+}

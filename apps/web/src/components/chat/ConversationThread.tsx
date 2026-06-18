@@ -1,6 +1,7 @@
 import { Text, Badge } from '@fluentui/react-components';
 import type { ChatMessageVm } from '../../types/chat';
 import type { AnswerStatus } from '../../types/api';
+import { FeedbackButtons } from './FeedbackButtons';
 
 const STATUS_LABELS: Record<AnswerStatus, string> = {
   ANSWERED: 'Grounded answer',
@@ -45,7 +46,12 @@ function SourceCardList({ sources }: { sources: ChatMessageVm['sources'] }) {
   );
 }
 
-export function ConversationThread({ messages }: { messages: ChatMessageVm[] }) {
+interface ConversationThreadProps {
+  messages: ChatMessageVm[];
+  token: string;
+}
+
+export function ConversationThread({ messages, token }: ConversationThreadProps) {
   return (
     <div style={{ width: '100%', maxWidth: 'var(--rag-max-content)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {messages.map((msg) => (
@@ -65,8 +71,15 @@ export function ConversationThread({ messages }: { messages: ChatMessageVm[] }) 
           ) : (
             <>
               <Text>{msg.content}</Text>
-              {msg.status && <div style={{ marginTop: '0.5rem' }}><StatusBadge status={msg.status} /></div>}
+              {msg.status && (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <StatusBadge status={msg.status} />
+                </div>
+              )}
               {msg.role === 'assistant' && <SourceCardList sources={msg.sources} />}
+              {msg.role === 'assistant' && msg.backendMessageId && msg.status === 'ANSWERED' && (
+                <FeedbackButtons token={token} messageId={msg.backendMessageId} />
+              )}
             </>
           )}
         </div>

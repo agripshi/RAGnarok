@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -5,8 +7,16 @@ from app.api.router import api_router
 from app.core.config import settings
 from app.core.errors import AppError
 from app.core.exception_handlers import app_error_handler
+from app.db.init_db import init_db
 
-app = FastAPI(title="RAGnarok Backend API", version="0.2.0")
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    init_db()
+    yield
+
+
+app = FastAPI(title="RAGnarok Backend API", version="0.3.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

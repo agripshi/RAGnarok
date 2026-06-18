@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     app_env: str = "local"
     api_host: str = "0.0.0.0"
     api_port: int = 8000
-    database_url: str = "postgresql+psycopg://ragnarok:ragnarok@localhost:5432/ragnarok_hr"
+    database_url: str = "sqlite:///./ragnarok_local.db"
     frontend_origins: str = "http://localhost:5173,https://localhost:53000"
     ai_backend_url: str = "http://localhost:8001"
     ai_backend_internal_token: str = "dev-internal-token"

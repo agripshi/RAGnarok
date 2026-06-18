@@ -29,7 +29,7 @@ async def assert_user_can_access_hr_channel(db: Session, user: AuthenticatedUser
     allowed = _is_allowlisted(user)
     expires_at = datetime.now(timezone.utc) + timedelta(seconds=settings.access_cache_ttl_seconds)
     chat_repo.set_cached_access(db, user.entra_user_id, team_id, channel_id, allowed, expires_at)
-    db.commit()
+    db.flush()
 
     if not allowed:
         raise AccessDeniedError()

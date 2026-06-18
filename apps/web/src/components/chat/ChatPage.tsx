@@ -57,6 +57,7 @@ export function ChatPage({ token, teamsContext }: ChatPageProps) {
           status: response.status,
           language: response.language,
           sources: response.sources,
+          backendMessageId: response.messageId,
         });
       } catch (e) {
         if (e instanceof ApiError && e.status === 403) {
@@ -100,7 +101,7 @@ export function ChatPage({ token, teamsContext }: ChatPageProps) {
           Welcome, how can I help?
         </h1>
       )}
-      {hasMessages && <ConversationThread messages={messages} />}
+      {hasMessages && <ConversationThread messages={messages} token={token} />}
       <ChatComposer disabled={isSending} onSubmit={handleSubmit} />
     </div>
   );

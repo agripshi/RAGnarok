@@ -1,4 +1,6 @@
 import { FluentProvider, webLightTheme, Spinner, Text } from '@fluentui/react-components';
+import { useEffect, useState } from 'react';
+import { fetchMe } from './api/meApi';
 import { useTeamsAuth } from './auth/useTeamsAuth';
 import { ChatPage } from './components/chat/ChatPage';
 import { env } from './config/env';
@@ -36,8 +38,16 @@ function AccessDeniedView() {
 
 function App() {
   const auth = useTeamsAuth();
+  const [hasHrAccess, setHasHrAccess] = useState<boolean | null>(null);
 
-  if (auth.isInitializing) {
+  useEffect(() => {
+    if (!auth.token) return;
+    fetchMe(auth.token)
+      .then((me) => setHasHrAccess(me.hasHrAccess))
+      .catch(() => setHasHrAccess(false));
+  }, [auth.token]);
+
+  if (auth.isInitializing || (auth.token && hasHrAccess === null)) {
     return (
       <FluentProvider theme={webLightTheme}>
         <LoadingState label={`Starting ${env.appDisplayName}…`} />
@@ -49,6 +59,14 @@ function App() {
     return (
       <FluentProvider theme={webLightTheme}>
         <ErrorState title="Authentication failed" message={auth.error ?? 'No token available'} />
+      </FluentProvider>
+    );
+  }
+
+  if (hasHrAccess === false) {
+    return (
+      <FluentProvider theme={webLightTheme}>
+        <AccessDeniedView />
       </FluentProvider>
     );
   }
