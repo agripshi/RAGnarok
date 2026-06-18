@@ -33,8 +33,8 @@ class Settings(BaseSettings):
     chunk_overlap: int = 120
     max_context_chunks: int = 6
 
-    default_team_id: str = "demo-team-id"
-    default_channel_id: str = "demo-hr-channel-id"
+    default_team_id: str = "1531e68a-4716-43aa-bc3b-41b11451cbbb"
+    default_channel_id: str = "19:11b56c75623d48ac828e2797373cacae@thread.tacv2"
     hr_docs_local_dir: str = "../../data/hr-docs"
 
 
