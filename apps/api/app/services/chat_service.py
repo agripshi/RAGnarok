@@ -89,7 +89,7 @@ async def handle_chat(db: Session, request: ChatRequest, user: AuthenticatedUser
         conversationId=str(conversation.id),
         messageId=str(assistant.id),
         status=ai_response.status,
-        language=ai_response.language if ai_response.language in ("sq", "it", "sr", "en") else "unknown",
+        language=ai_response.language if ai_response.language in ("sq", "sr", "en") else "unknown",
         answer=answer_text,
         clarificationQuestion=ai_response.clarification_question,
         sources=ai_response.sources,

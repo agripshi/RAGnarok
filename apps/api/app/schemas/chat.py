@@ -3,7 +3,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 AnswerStatus = Literal["ANSWERED", "NEEDS_CLARIFICATION", "NOT_FOUND", "ACCESS_DENIED", "ERROR"]
-SupportedLanguage = Literal["sq", "it", "sr", "en", "unknown"]
+SupportedLanguage = Literal["sq", "sr", "en", "unknown"]
 
 
 class TeamsContextPayload(BaseModel):

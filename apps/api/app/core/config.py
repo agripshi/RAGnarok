@@ -24,8 +24,8 @@ class Settings(BaseSettings):
     authorized_user_ids: str = "dev-user-001"
     access_cache_ttl_seconds: int = 300
     admin_emails: str = "demo.user@company.com"
-    team_id: str = "demo-team-id"
-    hr_private_channel_id: str = "demo-hr-channel-id"
+    team_id: str = "1531e68a-4716-43aa-bc3b-41b11451cbbb"
+    hr_private_channel_id: str = "19:11b56c75623d48ac828e2797373cacae@thread.tacv2"
 
     @property
     def frontend_origin_list(self) -> list[str]:
