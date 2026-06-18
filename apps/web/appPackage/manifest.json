@@ -4,14 +4,14 @@
   "version": "1.0.0",
   "id": "00000000-0000-0000-0000-000000000001",
   "developer": {
-    "name": "RAGnarok Team",
+    "name": "HR Hub Team",
     "websiteUrl": "https://github.com",
     "privacyUrl": "https://github.com",
     "termsOfUseUrl": "https://github.com"
   },
   "name": {
-    "short": "RAGnarok HR",
-    "full": "RAGnarok HR Assistant"
+    "short": "HR Hub",
+    "full": "HR Hub"
   },
   "description": {
     "short": "Multilingual HR assistant grounded in private HR documents.",
@@ -21,20 +21,21 @@
     "color": "color.png",
     "outline": "outline.png"
   },
-  "accentColor": "#002F53",
+  "accentColor": "#A100FF",
   "staticTabs": [
     {
-      "entityId": "ragnarok-hr-tab",
-      "name": "HR Assistant",
-      "contentUrl": "http://127.0.0.1:5173",
-      "websiteUrl": "http://127.0.0.1:5173",
-      "scopes": ["personal", "team"]
+      "entityId": "hr-hub-tab",
+      "name": "HR Hub",
+      "contentUrl": "https://dbivtz-ip-109-236-40-246.tunnelmole.net",
+      "websiteUrl": "https://dbivtz-ip-109-236-40-246.tunnelmole.net",
+      "scopes": [
+        "personal",
+        "team"
+      ]
     }
   ],
   "validDomains": [
-    "localhost:5173",
-    "127.0.0.1:5173",
-    "127.0.0.1:8000"
+    "dbivtz-ip-109-236-40-246.tunnelmole.net"
   ],
   "webApplicationInfo": {
     "id": "00000000-0000-0000-0000-000000000002",

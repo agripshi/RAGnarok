@@ -1,59 +1,47 @@
-import { Button, Textarea, Spinner } from '@fluentui/react-components';
+import { useRef } from 'react';
+import { Spinner } from '@fluentui/react-components';
 import { Send24Regular } from '@fluentui/react-icons';
-
 interface ChatComposerProps {
   disabled?: boolean;
   onSubmit: (message: string) => void;
 }
 
 export function ChatComposer({ disabled, onSubmit }: ChatComposerProps) {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const submit = () => {
+    const value = textareaRef.current?.value.trim();
+    if (!value) return;
+    onSubmit(value);
+    if (textareaRef.current) textareaRef.current.value = '';
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      const value = e.currentTarget.value.trim();
-      if (value) {
-        onSubmit(value);
-        e.currentTarget.value = '';
-      }
+      submit();
     }
   };
 
   return (
-    <div
-      style={{
-        width: '100%',
-        maxWidth: 'var(--rag-max-content)',
-        background: 'var(--rag-surface)',
-        borderRadius: 'var(--rag-radius-lg)',
-        boxShadow: 'var(--rag-shadow-soft)',
-        padding: '0.75rem 1rem',
-        display: 'flex',
-        gap: '0.75rem',
-        alignItems: 'flex-end',
-      }}
-    >
-      <Textarea
-        placeholder="Message HR Assistant"
-        resize="none"
-        rows={2}
+    <div className="eng-composer">
+      <textarea
+        ref={textareaRef}
+        className="eng-composer__textarea"
+        placeholder="Message HR Hub…"
+        rows={1}
         disabled={disabled}
         onKeyDown={handleKeyDown}
-        style={{ flex: 1, border: 'none', boxShadow: 'none' }}
+        aria-label="Message HR Hub"
       />
-      <Button
-        appearance="primary"
-        icon={disabled ? <Spinner size="tiny" /> : <Send24Regular />}
+      <button
+        type="button"
+        className="eng-composer__send"
         disabled={disabled}
         aria-label="Send message"
-        onClick={() => {
-          const el = document.querySelector('textarea[placeholder="Message HR Assistant"]') as HTMLTextAreaElement | null;
-          const value = el?.value.trim();
-          if (value) {
-            onSubmit(value);
-            if (el) el.value = '';
-          }
-        }}
-      />
-    </div>
+        onClick={submit}
+      >
+        {disabled ? <Spinner size="tiny" /> : <Send24Regular />}
+      </button>    </div>
   );
 }

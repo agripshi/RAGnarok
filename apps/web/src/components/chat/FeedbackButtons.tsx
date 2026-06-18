@@ -23,7 +23,7 @@ export function FeedbackButtons({ token, messageId }: FeedbackButtonsProps) {
 
   if (submitted) {
     return (
-      <Text size={200} style={{ color: 'var(--rag-muted)', marginTop: '0.5rem' }}>
+      <Text size={200} style={{ color: 'var(--eng-text-muted)', marginTop: '0.5rem' }}>
         Thanks for your feedback.
       </Text>
     );

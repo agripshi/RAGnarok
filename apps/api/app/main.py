@@ -16,7 +16,7 @@ async def lifespan(_: FastAPI):
     yield
 
 
-app = FastAPI(title="RAGnarok Backend API", version="0.3.0", lifespan=lifespan)
+app = FastAPI(title="HR Hub Backend API", version="0.4.0", lifespan=lifespan)
 
 _cors_origins = (
     ["*"]
