@@ -13,7 +13,7 @@ from app.services.ingestion_service import IngestionService
 async def lifespan(_: FastAPI):
     docs_path = Path(settings.hr_docs_local_dir)
     if not docs_path.is_absolute():
-        docs_path = (Path(__file__).resolve().parents[2] / settings.hr_docs_local_dir).resolve()
+        docs_path = (Path(__file__).resolve().parents[1] / settings.hr_docs_local_dir).resolve()
     if docs_path.exists():
         await IngestionService().sync_documents(
             IngestRequest(

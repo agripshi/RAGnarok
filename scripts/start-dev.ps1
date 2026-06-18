@@ -8,7 +8,7 @@ Write-Host "Starting RAGnarok HR Assistant..." -ForegroundColor Cyan
 # AI Backend
 Start-Process powershell -ArgumentList @(
   "-NoExit", "-Command",
-  "cd '$root\apps\ai'; .\.venv\Scripts\uvicorn.exe app.main:app --host 127.0.0.1 --port 8001 --reload"
+  "cd '$root\apps\ai'; .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8001 --reload"
 )
 
 Start-Sleep -Seconds 3
@@ -16,7 +16,7 @@ Start-Sleep -Seconds 3
 # Backend API
 Start-Process powershell -ArgumentList @(
   "-NoExit", "-Command",
-  "cd '$root\apps\api'; .\.venv\Scripts\uvicorn.exe app.main:app --host 127.0.0.1 --port 8000 --reload"
+  "cd '$root\apps\api'; .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload"
 )
 
 Start-Sleep -Seconds 2
