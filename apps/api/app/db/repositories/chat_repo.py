@@ -53,12 +53,21 @@ def add_message(
     return msg
 
 
+def _safe_uuid(value: str | None) -> uuid.UUID | None:
+    if not value:
+        return None
+    try:
+        return uuid.UUID(str(value))
+    except ValueError:
+        return None
+
+
 def add_answer_sources(db: Session, message_id: uuid.UUID, sources: list[dict]) -> None:
     for src in sources:
         db.add(
             AnswerSource(
                 message_id=message_id,
-                document_id=uuid.UUID(src["documentId"]) if src.get("documentId") else None,
+                document_id=_safe_uuid(src.get("documentId")),
                 title=src["title"],
                 page=src.get("page"),
                 section=src.get("section"),

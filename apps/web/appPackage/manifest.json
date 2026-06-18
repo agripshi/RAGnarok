@@ -26,16 +26,15 @@
     {
       "entityId": "ragnarok-hr-tab",
       "name": "HR Assistant",
-      "contentUrl": "https://localhost:53000",
-      "websiteUrl": "https://localhost:53000",
+      "contentUrl": "http://127.0.0.1:5173",
+      "websiteUrl": "http://127.0.0.1:5173",
       "scopes": ["personal", "team"]
     }
   ],
   "validDomains": [
-    "localhost",
     "localhost:5173",
-    "localhost:53000",
-    "localhost:8000"
+    "127.0.0.1:5173",
+    "127.0.0.1:8000"
   ],
   "webApplicationInfo": {
     "id": "00000000-0000-0000-0000-000000000002",

@@ -39,15 +39,20 @@ function AccessDeniedView() {
 function App() {
   const auth = useTeamsAuth();
   const [hasHrAccess, setHasHrAccess] = useState<boolean | null>(null);
+  const [accessError, setAccessError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!auth.token) return;
+    setAccessError(null);
     fetchMe(auth.token)
       .then((me) => setHasHrAccess(me.hasHrAccess))
-      .catch(() => setHasHrAccess(false));
+      .catch((e) => {
+        setHasHrAccess(false);
+        setAccessError(e instanceof Error ? e.message : 'Could not reach backend API');
+      });
   }, [auth.token]);
 
-  if (auth.isInitializing || (auth.token && hasHrAccess === null)) {
+  if (auth.isInitializing || (auth.token && hasHrAccess === null && !accessError)) {
     return (
       <FluentProvider theme={webLightTheme}>
         <LoadingState label={`Starting ${env.appDisplayName}…`} />
@@ -58,7 +63,21 @@ function App() {
   if (auth.error || !auth.token) {
     return (
       <FluentProvider theme={webLightTheme}>
-        <ErrorState title="Authentication failed" message={auth.error ?? 'No token available'} />
+        <ErrorState
+          title="Authentication failed"
+          message={auth.error ?? 'No token available'}
+        />
+      </FluentProvider>
+    );
+  }
+
+  if (accessError) {
+    return (
+      <FluentProvider theme={webLightTheme}>
+        <ErrorState
+          title="Cannot reach backend"
+          message={`${accessError} — ensure the API is running at ${env.apiBaseUrl}`}
+        />
       </FluentProvider>
     );
   }

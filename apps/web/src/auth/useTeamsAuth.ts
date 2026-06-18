@@ -34,7 +34,7 @@ export function useTeamsAuth(): UseTeamsAuthResult {
         const ctx = await getTeamsContext();
         if (cancelled) return;
         setTeamsContext(ctx);
-        const t = await getTeamsSsoToken();
+        const t = await getTeamsSsoToken(inTeams);
         if (cancelled) return;
         setToken(t);
       } catch (e) {

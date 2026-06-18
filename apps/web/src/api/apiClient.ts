@@ -11,24 +11,40 @@ export class ApiError extends Error {
 }
 
 export async function apiFetch<T>(path: string, options: RequestInit, token: string): Promise<T> {
-  const response = await fetch(`${env.apiBaseUrl}${path}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-      ...(options.headers ?? {}),
-    },
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15_000);
 
-  if (!response.ok) {
-    let payload: unknown = null;
-    try {
-      payload = await response.json();
-    } catch {
-      payload = null;
+  try {
+    const response = await fetch(`${env.apiBaseUrl}${path}`, {
+      ...options,
+      signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+        ...(options.headers ?? {}),
+      },
+    });
+
+    if (!response.ok) {
+      let payload: unknown = null;
+      try {
+        payload = await response.json();
+      } catch {
+        payload = null;
+      }
+      throw new ApiError(`API request failed: ${response.status}`, response.status, payload);
     }
-    throw new ApiError(`API request failed: ${response.status}`, response.status, payload);
-  }
 
-  return response.json() as Promise<T>;
+    return response.json() as Promise<T>;
+  } catch (error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new ApiError(
+        `Backend unreachable at ${env.apiBaseUrl}. Start the API on port 8000.`,
+        0
+      );
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
 }

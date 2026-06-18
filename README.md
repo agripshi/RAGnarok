@@ -18,6 +18,10 @@ Teams Frontend (apps/web) → Backend API (apps/api) → AI Backend (apps/ai)
 
 ## Quick Start
 
+**One command (Windows):** `.\scripts\start-dev.ps1` — opens AI, API, and frontend in separate terminals.
+
+Or start manually:
+
 ### 1. AI Backend (port 8001) — start first
 
 Auto-ingests `data/hr-docs/` on startup.
@@ -79,16 +83,17 @@ LLM_MOCK_ENABLED=false
 |---|---|---|
 | Sprint 0 | Foundation & scaffolding | **100%** |
 | Sprint 1 | UI + API + DB skeleton | **100%** |
-| Sprint 2 | AI ingestion & RAG (mock LLM) | **95%** |
-| Sprint 3 | E2E integration (FE→BE→AI) | **90%** |
-| Sprint 4 | Feedback, access guard, admin ingest | **85%** |
-| Sprint 5 | Tests & demo freeze | **40%** |
+| Sprint 2 | AI ingestion & RAG (mock LLM) | **100%** |
+| Sprint 3 | E2E integration (FE→BE→AI) | **100%** |
+| Sprint 4 | Feedback, access guard, admin ingest | **100%** |
+| Sprint 5 | Tests & demo freeze | **100%** |
 
-**Overall: ~85%**
+**Overall: 100%** (MVP demo-ready)
 
 ## Documentation
 
-- `docs/RAGnarok_Business_Foundational_Spec.md`
+- `docs/DEMO.md` — 10-minute hackathon demo script
+- `docs/TEAMS_DEPLOYMENT_CHECKLIST.md` — local sideload + Azure production path
 - `docs/RAGnarok_Technical_Architecture_Spec.md`
 - `docs/RAGnarok_Frontend_Implementation_Technical_Doc.md`
 - `docs/RAGnarok_Backend_DB_Implementation_Technical_Doc.md`

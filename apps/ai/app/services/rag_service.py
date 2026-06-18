@@ -27,6 +27,10 @@ class RagService:
         filtered = [c for c in chunks if c.score >= settings.similarity_threshold]
         if not filtered and chunks and settings.llm_mock_enabled:
             filtered = [chunks[0]]
+        if not filtered and chunks:
+            lang_chunks = [c for c in chunks if c.language == language]
+            if lang_chunks:
+                filtered = [lang_chunks[0]]
 
         if not filtered:
             return RagAnswerResponse(
