@@ -1,13 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
 :root {
-  --rag-bg: #f7f7f7;
-  --rag-surface: #ffffff;
-  --rag-border: #e5e5e5;
-  --rag-text: #242424;
-  --rag-muted: #616161;
-  --rag-radius-lg: 24px;
-  --rag-radius-md: 14px;
-  --rag-shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.08);
+  /* Engineering palette */
+  --eng-black: #000000;
+  --eng-surface: #0a0a0a;
+  --eng-surface-raised: #141414;
+  --eng-surface-overlay: #1a1a1a;
+  --eng-purple: #a100ff;
+  --eng-purple-deep: #6b00cc;
+  --eng-purple-glow: rgba(161, 0, 255, 0.45);
+  --eng-purple-muted: rgba(161, 0, 255, 0.18);
+  --eng-text: #ffffff;
+  --eng-text-muted: #b3b3b3;
+  --eng-text-subtle: #8a8a8a;
+  --eng-border: rgba(255, 255, 255, 0.12);
+  --eng-border-accent: rgba(161, 0, 255, 0.4);
+
+  /* Legacy tokens mapped to Engineering */
+  --rag-bg: var(--eng-black);
+  --rag-surface: var(--eng-surface-raised);
+  --rag-border: var(--eng-border);
+  --rag-text: var(--eng-text);
+  --rag-muted: var(--eng-text-muted);
+  --rag-radius-lg: 20px;
+  --rag-radius-md: 12px;
+  --rag-shadow-soft: 0 12px 40px rgba(0, 0, 0, 0.55);
   --rag-max-content: 940px;
+
+  --eng-font: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
 }
 
 *,
@@ -18,11 +38,299 @@
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', system-ui, sans-serif;
-  background: var(--rag-bg);
-  color: var(--rag-text);
+  font-family: var(--eng-font);
+  background: var(--eng-black);
+  color: var(--eng-text);
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/* App shell */
+.eng-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--eng-black);
+  position: relative;
+  overflow: hidden;
+}
+
+.eng-app::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 100%, var(--eng-purple-glow) 0%, transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(107, 0, 204, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(161, 0, 255, 0.08) 0%, transparent 35%);
+  z-index: 0;
+}
+
+.eng-app__header {
+  position: relative;
+  z-index: 1;
+  padding: 0.875rem 1.5rem;
+  border-bottom: 1px solid var(--eng-border);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+}
+
+.eng-app__main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+/* Brand */
+.eng-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--eng-text);
+  min-height: 36px;
+}
+
+.eng-logo__img {
+  display: block;
+  height: 36px;
+  width: 36px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-right: 0.125rem;
+}
+
+.eng-logo__sep {
+  color: var(--eng-text-subtle);
+  font-weight: 400;
+  font-size: 1.25rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.eng-logo__hub {
+  font-family: var(--eng-font);
+  font-weight: 700;
+  font-size: 1.375rem;
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  color: var(--eng-text);
+  line-height: 1;
+}
+
+/* Toolbar */
+.eng-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.eng-toolbar__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Chat page */
+.eng-chat-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 2.5rem;
+  gap: 1.5rem;
+  min-height: 70vh;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.eng-chat-page--centered {
+  justify-content: center;
+}
+
+.eng-welcome {
+  text-align: center;
+  max-width: 640px;
+}
+
+.eng-welcome__title {
+  font-weight: 700;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.25;
+  margin: 0 0 0.75rem;
+  padding-bottom: 0.15em;
+  letter-spacing: -0.03em;
+  display: block;
+  overflow: visible;
+  background: linear-gradient(135deg, #ffffff 0%, #db99ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.eng-welcome__subtitle {
+  margin: 0;
+  color: var(--eng-text-muted);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Composer ÔÇö single unified bar */
+.eng-composer {
+  width: 100%;
+  max-width: var(--rag-max-content);
+  min-height: 70px;
+  background: var(--eng-surface-overlay);
+  border: 1px solid var(--eng-border-accent);
+  border-radius: var(--rag-radius-lg);
+  box-shadow: var(--rag-shadow-soft), 0 0 32px rgba(161, 0, 255, 0.08);
+  padding: 0 1rem 0 1.125rem;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.eng-composer:focus-within {
+  border-color: var(--eng-purple);
+  box-shadow: var(--rag-shadow-soft), 0 0 0 1px rgba(161, 0, 255, 0.35), 0 0 24px rgba(161, 0, 255, 0.12);
+}
+
+.eng-composer__textarea {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  color: var(--eng-text);
+  font-family: var(--eng-font);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  height: 1.5rem;
+  min-height: 1.5rem;
+  max-height: 6rem;
+  overflow-y: auto;
+  align-self: center;
+  field-sizing: content;
+}
+
+.eng-composer__textarea::placeholder {
+  color: var(--eng-text-subtle);
+}
+
+.eng-composer__textarea:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.eng-composer__send {
+  flex-shrink: 0;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--eng-purple);
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.eng-composer__send svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.eng-composer__send:hover:not(:disabled) {
+  color: #c966ff;
+  transform: translateX(2px);
+}
+
+.eng-composer__send:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Messages */
+.eng-thread {
+  width: 100%;
+  max-width: var(--rag-max-content);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.eng-message {
+  max-width: 85%;
+  padding: 1rem 1.125rem;
+  border-radius: var(--rag-radius-md);
+  border: 1px solid var(--eng-border);
+}
+
+.eng-message--user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, rgba(161, 0, 255, 0.28) 0%, rgba(107, 0, 204, 0.2) 100%);
+  border-color: var(--eng-border-accent);
+}
+
+.eng-message--assistant {
+  align-self: flex-start;
+  background: var(--eng-surface-overlay);
+}
+
+.eng-source-card {
+  padding: 0.75rem;
+  border: 1px solid var(--eng-border);
+  border-radius: var(--rag-radius-md);
+  background: var(--eng-surface);
+}
+
+.eng-source-card a {
+  color: var(--eng-purple);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.eng-source-card a:hover {
+  text-decoration: underline;
+  color: #c966ff;
+}
+
+/* State screens */
+.eng-state-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.eng-state-screen--row {
+  flex-direction: row;
+}
+
+/* Fluent overrides for dark Engineering chrome */
+.fui-Dropdown,
+.fui-Button[data-fui-appearance='outline'] {
+  border-color: var(--eng-border) !important;
 }

@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 import uuid
 
 import httpx
@@ -80,6 +82,7 @@ async def handle_chat(db: Session, request: ChatRequest, user: AuthenticatedUser
             assistant.id,
             [s.model_dump() for s in ai_response.sources],
         )
+    conversation.updated_at = datetime.now(timezone.utc)
     db.commit()
 
     return ChatResponse(

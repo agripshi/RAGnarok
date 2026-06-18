@@ -33,6 +33,30 @@ def get_conversation_for_user(db: Session, conversation_id: uuid.UUID, user_id: 
     )
 
 
+def list_conversations_for_user(db: Session, user_id: uuid.UUID, limit: int = 50) -> list[Conversation]:
+    return list(
+        db.scalars(
+            select(Conversation)
+            .where(Conversation.user_id == user_id)
+            .order_by(Conversation.updated_at.desc())
+            .limit(limit)
+        ).all()
+    )
+
+
+def get_messages_for_conversation(db: Session, conversation_id: uuid.UUID) -> list[Message]:
+    from sqlalchemy.orm import selectinload
+
+    return list(
+        db.scalars(
+            select(Message)
+            .where(Message.conversation_id == conversation_id)
+            .options(selectinload(Message.answer_sources))
+            .order_by(Message.created_at.asc())
+        ).all()
+    )
+
+
 def add_message(
     db: Session,
     conversation_id: uuid.UUID,

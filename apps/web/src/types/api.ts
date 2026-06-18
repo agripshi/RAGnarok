@@ -48,6 +48,32 @@ export interface MeResponse {
   hasHrAccess: boolean;
 }
 
+export interface ConversationSummaryDto {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MessageDto {
+  id: string;
+  conversationId: string;
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  status?: AnswerStatus;
+  language?: SupportedLanguage;
+  sources?: SourceCardDto[];
+  createdAt: string;
+}
+
+export interface ConversationDetailDto {
+  id: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  messages: MessageDto[];
+}
+
 export interface FeedbackRequest {
   messageId: string;
   rating: 'helpful' | 'not_helpful';
