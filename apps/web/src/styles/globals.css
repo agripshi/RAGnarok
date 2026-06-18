@@ -1,0 +1,28 @@
+:root {
+  --rag-bg: #f7f7f7;
+  --rag-surface: #ffffff;
+  --rag-border: #e5e5e5;
+  --rag-text: #242424;
+  --rag-muted: #616161;
+  --rag-radius-lg: 24px;
+  --rag-radius-md: 14px;
+  --rag-shadow-soft: 0 8px 28px rgba(0, 0, 0, 0.08);
+  --rag-max-content: 940px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--rag-bg);
+  color: var(--rag-text);
+}
+
+#root {
+  min-height: 100vh;
+}
