@@ -12,6 +12,12 @@ class Settings(BaseSettings):
     ai_backend_url: str = "http://localhost:8001"
     ai_backend_internal_token: str = "dev-internal-token"
     dev_auth_enabled: bool = True
+    dev_auth_user_id: str = "dev-user-001"
+    dev_auth_email: str = "demo.user@company.com"
+    authorized_emails: str = "demo.user@company.com"
+    authorized_user_ids: str = "dev-user-001"
+    access_cache_ttl_seconds: int = 300
+    admin_emails: str = "demo.user@company.com"
     team_id: str = "demo-team-id"
     hr_private_channel_id: str = "demo-hr-channel-id"
 
